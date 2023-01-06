@@ -22,14 +22,20 @@ Wireframe- ![image](https://github.com/SoftPoachedEggs/NBA-Player-Stat-Search/bl
 APIs- 
 
 -NBA API
+
 -YouTube API 
+
 -Wikipedia API
 
 Rough Breakdown of tasks-
 
 Louis Q - HTML & CSS - supporting API 
+
 Elisha B - Youtube API 
+
 Alexis S - Wikipedia API
+
 Aaron K - NBA API
+
 Ricardo L - JavaScript - supportingg API
 
