@@ -38,5 +38,5 @@ Alexis S - Wikipedia API
 
 Aaron K - NBA API
 
-Ricardo L - JavaScript - supportingg API
+Ricardo L - JavaScript - supporting API
 
