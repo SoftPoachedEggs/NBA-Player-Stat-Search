@@ -14,7 +14,8 @@ WHEN I follow my favorite player
 THEN I have my favorite players saved to the home screen
 
 
-Wireframe- ![image](https://files.slack.com/files-pri/T046GDYBH16-F04HR0N1RA7/image.png)
+Wireframe- ![image](https://github.com/SoftPoachedEggs/NBA-Player-Stat-Search/blob/afe370ff610363a2547eecd5a2a3c13abe67ebe2/image.png)
+![image](
 
 
 
