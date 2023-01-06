@@ -1,17 +1,17 @@
 <H1>CourtCentral - NBA Player Stats Search Engine</h1>
 
-<h2>Project description<h2> 
+<h2>Project description</h2> 
 
 This product will serve as an NBA player search engine that will allow users to pull up player stats, see the player image , and play a highlight video under the players card.  
 
 <h2>User Story</H2>
-GIVEN  I am a sports fan wanting to know stats of my favorite players. 
-WHEN I visit the website 
-THEN I am prompted with a search bar to find my favorite player, and top five player stats
-WHEN I search for my favorite player
-THEN my favorite player is displayed on page with current stats and highlight video
-WHEN I follow my favorite players
-THEN I can quickly navigate to my saved favorite players from home screen
+GIVEN  I am a sports fan wanting to know stats of my favorite players<br> 
+WHEN I visit the website <br>
+THEN I am prompted with a search bar to find my favorite player, and top five player stats<br>
+WHEN I search for my favorite player<br>
+THEN my favorite player is displayed on page with current stats and highlight video<br>
+WHEN I follow my favorite players<br>
+THEN I can quickly navigate to my saved favorite players from home screen<br>
 
 <h2>Wireframe</h2>
   
