@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <title>This is where title goes.</title>
+</head>
+
+<body>
+    <header>
+        <div id="wg-api-basketball-games"
+             data-host="v1.basketball.api-sports.io"
+             data-key="96d6e942517f63458c5c16cdcc46b496"
+             data-date=""
+             data-league="116"
+             data-season=""
+             data-theme="dark"
+             data-refresh=`15`
+             data-show-toolbar="true"
+             data-show-errors="false"
+             data-show-logos="true"
+             data-modal-game="true"
+             data-modal-standings="true"
+             data-modal-show-logos="true">
+        </div>
+        <script
+            type="module"
+            src="https://widgets.api-sports.io/2.0.3/widgets.js">
+        </script>
+
+    <div id="searchBar">
+        <input type="text" id="searchInput" name="name">
+        <input type="submit" id="searchButton" value="Submit">
+    </div>
+
+    <div class="col-12 col-md-9 p-3 text-light">
+    <h2>Showing results for <span id="result-text"></span></h2>
+    <div id="result-content"></div>
+    </div>
+    <div id= "playerBioCard"></div>
+    <div id= "playerStatCardSection"></div>
+   
+    <footer>This is where footer goes.</footer>
+
+    <script type= "text/javascript" src="./assets/js/script.js"></script>
+
+</body>
+
+</html>
