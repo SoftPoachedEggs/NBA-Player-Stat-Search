@@ -1,0 +1,88 @@
+/* Declaring variables */
+:root {
+    --color-1 : #000000;
+    --color-2 : #ff0000;
+    --color-3 : #0000ff;
+    --color-4: #c1b4ae;
+    --color-5 : #f9f4f5;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    background-color: var(--color-1);
+    width: 100%;
+    color: var(--color-5);
+    padding: 20px;
+    position: fixed;
+    top: 0;
+}
+
+header > * {
+    display: inline-block;
+}
+
+ul > * {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+header ul {
+    float: right;
+    margin-right: 20px;
+    
+}
+
+/* Team Banner */
+.team-banner {
+    background-color: var(--color-4);
+    width: 100%;
+    height: 10vh;
+    margin-top: 77px;
+}
+
+.team-banner h2 {
+    color: var(--color-5);
+    font-size: 200%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 10vh;
+}
+
+/* Flex box */
+
+.container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.item {
+    width:400px;
+    height: 400px;
+    background-color: var(--color-5);
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.item2{
+    width: 90%;
+}
+
+.team-list{
+    height: 100px;
+}
+
+.p-stat h2{
+    padding: 10px;
+}
+
+/*  */
+img {
+    height: 400px;
+    width: 400px;
+    object-fit: cover;
+}
