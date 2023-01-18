@@ -346,4 +346,14 @@ console.log("player game stats:", playerGameStats)
     for (var i = 0; i < searchHistory.length; i++) {
         historyButton(searchHistory[i]);
     }
+
+    $(".clr-btn").on("click", function (event) {
+        localStorage.clear();
+        $(".history-btn").remove();
+        searchHistory = [];
+        savedStorage();
+    });
+
+    savedStorage();
+
   }
