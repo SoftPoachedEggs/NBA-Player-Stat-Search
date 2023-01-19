@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class=" has-background-black">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,11 +12,10 @@
     
 </head>
 
-    <body class=" has-background-black">
+    <body >
         <nav class="nav">
             <i class="uil uil-bars navOpenBtn"></i>
-            <a href="#" class="logo">Court Central</a>
-      
+            <a href="./index.html" class="logo">Court Central</a>
             <ul class="nav-links">
               <i class="uil uil-times navCloseBtn"></i>
               <li><a href="#">NBA</a></li>
@@ -26,37 +25,169 @@
 
             <i class="uil uil-search search-icon" id="searchIcon"></i>
             <div class="search-box">
-              <i class="uil uil-search search-icon"></i>
-              <input id = "searchInput" type="text" placeholder="Search for Player here..." />
-              <button id= "searthBtn" class="btn btn-info btn-block">Click Me</button>
+              <i class="uil uil-search search-icon" id="searthBtn"></i>
+              <input id = "searchInput" type="text" placeholder="Search for player here..." />
+             
             </div>
           </nav>
           <section class="hero is-large is-dark hero-image">
             <div class="hero-body">
               <div class="container has-text-centered">
                 <h1 class="title has-text-weight-bold">Stay up to date</h1>
-                <h3 class="subtitle has-text-weight-light">with the NBA</h3>
-              <div id = "search-result-content"> </div>
+                <h4 class="subtitle has-text-weight-light">with the NBA</h4>
+    
             </div>
             </section>
-          <div id="bioSection">
-            <img id="playerImg">
-            <div id="playerBioCard" class = "item p-stat"></div>
-            <div id="playerStatCardSection" class = "item p-stat"></div>
-          </div>
-
-          <!-- search history -->
-          <section id="pastSearches" class="search-list">
-            <strong>Your past searches:</strong>
-          </section>
-
-          <section id="clear-button">
-            <div id="clear-button" class="clear-btn">
-              <button class="clr-btn">Clear History</button>
+            <div id = "search-result-content"> 
+              <h3 id="playerName"></h3>
+              <img id="thumbnail">
             </div>
-          </section>
-          
+            <section class="scoreBoard">
+              <h1 class="scoreTitle">NBA</h1>
+              <div class="game">
+                <img src="./assets/images/boston-celtics.svg" alt="celtics logo" class="logo1">
+                <h1 class="team1">BOS</h1>
+                <img src="./assets/images/philidephia-ers (1).svg" alt="7ers logo" class="logo2">
+                <h1 class="team2">PHL</h1>
+                <h5 class="time">7:00 PM</h5>
+                <h5 class="day">Jan 13</h5>
+              </div>
+              <div class="game">
+                <img src="./assets/images/golden-state-warriors.svg" alt="warriors logo" class="logo1">
+                <h1 class="team1">GS</h1>
+                <img src="./assets/images/denver-nuggets.svg" alt="nuggets logo" class="logo2">
+                <h1 class="team2">DEN</h1>
+                <h5 class="time">10:00 PM</h5>
+                <h5 class="day">Jan 13</h5>
+              </div>
+              <div class="game">
+                <img src="./assets/images/charlotte-hornets.svg" alt="hornets logo" class="logo1">
+                <h1 class="team1">CHA</h1>
+                <img src="./assets/images/toronto-raptors.svg" alt="raptors logo" class="logo2">
+                <h1 class="team2">TOR</h1>
+                <h5 class="time">7:00 PM</h5>
+                <h5 class="day">Jan 13</h5>
+              </div>
+              <div class="game">
+                <img src="./assets/images/milwaukee-bucks.svg" alt="bucks logo" class="logo1">
+                <h1 class="team1">MIL</h1>
+                <img src="./assets/images/miami-heat.svg" alt="Heat logo" class="logo2">
+                <h1 class="team2">MIA</h1>
+                <h5 class="time">7:00 PM</h5>
+                <h5 class="day">Jan 13</h5>
+              </div>
+            </section>
+            
+  
+            <div id="statsBoard">
 
+              <h2 class="subtitle" id="statTitle">Offensive Leaders</h2>
+              <ul class="statTitle">
+                <li class="titleItem">POINTS</li>
+                <li  class="titleItem">PTS</li>
+              </ul>
+          
+              <div class="playerCard1">
+                <ul class="player">
+                  <li class="playerItem">
+                    <h4 class="rank">1</h4>
+                  </li>
+                  <li class="playerItem">
+                    <img class="playerImage" src="./assets/images/luka.png">
+                  </li>
+                  <li class="playerItem">
+                    <h4 class="name">L. Doncic</h4>
+                  </li>
+                  <li class="playerItem">
+                    <h4 class="stat">33.8</h4>
+                  </li>
+                </ul>
+              </div>
+          
+              <div class="playerCard2">
+                <ul class="player">
+                  <li class="playerItem">
+                    <h4 class="rank">2</h4>
+                  </li>
+                  <li class="playerItem">
+                    <img class="playerImage" src="./assets/images/joel.png">
+                  </li>
+                  <li class="playerItem">
+                    <h4 class="name">J. Embid</h4>
+                  </li>
+                  <li class="playerItem">
+                    <h4 class="stat">33.6</h4>
+                  </li>
+                </ul>
+              </div>
+          
+              <div class="playerCard3">
+                <ul class="player">
+                  <li class="playerItem">
+                    <h4 class="rank">3</h4>
+                  </li>
+                  <li class="playerItem">
+                    <img class="playerImage" src="./assets/images/Jason.png">
+                  </li>
+                  <li class="playerItem">
+                    <h4 class="name">J. Tatum</h4>
+                  </li>
+                  <li class="playerItem">
+                    <h4 class="stat">31.1</h4>
+                  </li>
+                </ul>
+              </div>
+          
+              <div class="playerCard4">
+                <ul class="player">
+                  <li class="playerItem">
+                    <h4 class="rank">4</h4>
+                  </li>
+                  <li class="playerItem">
+                    <img class="playerImage" src="./assets/images/Lebron.png">
+                  </li>
+                  <li class="playerItem">
+                    <h4 class="name">L. James</h4>
+                  </li>
+                  <li class="playerItem">
+                    <h4 class="stat">29.8</h4>
+                  </li>
+                </ul>
+              </div>
+          
+              <div class="playerCard5">
+                <ul class="player">
+                  <li class="playerItem">
+                    <h4 class="rank">5</h4>
+                  </li>
+                  <li class="playerItem">
+                    <img class="playerImage" src="./assets/images/Trae.png">
+                  </li>
+                  <li class="playerItem">
+                    <h4 class="name">T. Young</h4>
+                  </li>
+                  <li class="playerItem">
+                    <h4 class="stat">29.7</h4>
+                  </li>
+                </ul>
+              </div>
+              <h3 id="cHeading"> <a href="">Complete Leaders</a></h3>
+            </div>
+             
+            <div id="bioSection">
+              <img id="playerImg">
+              <div id="playerBioCard" class = "item p-stat"></div>
+              <div id="playerStatCardSection" class = "item p-stat"></div>
+            </div >
+          <footer class="footer has-background-black">
+            <div class="content has-text-centered">
+              <p>
+                <strong>Court Central</strong> by Group 3. The source code is licensed
+                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+              </p>
+            </div>
+          </footer>
     </body>
     <script src="./assets/js/script.js" defer></script>
 </html>
