@@ -1,5 +1,5 @@
 /* I need to pull 1 image from the Wikipedia page for the player picture and 1 image for the player team banner */
-var player = "LeBron James";
+var player = "Kobe Bryant";
 var pImg = document.querySelector("img");
 var pName = document.getElementById("name");
 var pHeight = document.getElementById("height");
@@ -52,21 +52,75 @@ var url = "https://en.wikipedia.org/w/api.php?" +
     })
     .then(function(data) {
         var wikiHTML = data.parse.text["*"];
+        // strips down html
         var plainWiki = wikiHTML.replace(/<(?:.|\n)*?>/gm, '');
-        var present = '-present';
-        var lastIndexPresent = plainWiki.indexOf('-present');
-        var indexCareerInfo =plainWiki.indexOf('Career highlights');
-        console.log("starting index " + lastIndexPresent);
-        console.log("ending index " + indexCareerInfo);
-        // console.log(plainWiki.slice( lastIndexPresent + present.length, indexCareerInfo ));      
-        console.log(plainWiki);      
+        /*
+        For Career Highlights
+        */
+        // saved string for the first index position
+        var highlights = 'Career highlights and awards';
+        var indexCareer = plainWiki.indexOf(highlights);
+        // string at the end of the career highlights and awards
+        var indexStat =plainWiki.indexOf('Stats');
+        // prints index position
+        console.log("starting index " + indexCareer);
+        console.log("ending index " + indexStat );
+        //saves variable for hightlights
+        var careerHighlights = plainWiki.slice( indexCareer + highlights.length, indexStat );
+        console.log(careerHighlights);
+        /*
+        For Team
+        */
+
+        var beginning = '&#32;';
+        var indexTeam = plainWiki.lastIndexOf(beginning);
+        var indexPosition = plainWiki.indexOf('Position');
+        var teamName = plainWiki.slice(indexTeam + beginning.length, indexPosition);
+        console.log(teamName);
+
+
+        // prints the wiki after being stripped
+        // console.log(plainWiki);      
     })
     .catch(function(error){console.log(error);});
 
-function setStats () {
-    // appending new text node
-    pName.appendChild(document.createTextNode('Name: ' + player));
-    pHeight.appendChild(document.createTextNode('Height: '  ));
-    pWeight.appendChild(document.createTextNode('Weight: ' ));
+
+async function funcName(pt) {
+    var url = "https://en.wikipedia.org/w/api.php?" +
+/* Sets search parameters for the api to target */
+    new URLSearchParams({
+        origin: "*",
+        action: "parse",
+        prop:"text",
+        page: pt,
+        format: "json",
+    });
+    const response = fetch(url);
+    var data = response.json();
+    var wikiHTML = data.parse.text["*"];
+    // strips down html
+    var plainWiki = wikiHTML.replace(/<(?:.|\n)*?>/gm, '');
 }
 
+
+
+    var url = "https://en.wikipedia.org/w/api.php?" +
+/* Sets search parameters for the api to target */
+    new URLSearchParams({
+        origin: "*",
+        action: "parse",
+        prop:"text",
+        page: 'Golden State Warriors',
+        format: "json",
+    });
+    fetch(url)
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(data) {       
+        var wikiHTML = data.parse.text["*"];
+        // strips down html
+        var plainWiki = wikiHTML.replace(/<(?:.|\n)*?>/gm, '');
+        console.log(plainWiki);
+    })
+    .catch(function(error){console.log(error);});
