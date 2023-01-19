@@ -314,28 +314,28 @@ console.log("player game stats:", playerGameStats)
     }
   }
 
-  var historyButton = function(name) {
+  var historyButton = function(searchedName) {
     var histButtonEl = document.createElement("button");
         histButtonEl.setAttribute("type", "submit" );
         histButtonEl.classList = "history-btn";
-        name = name.toUpperCase();
-        histButtonEl.textContent = name;
+        searchedName = searchedName.toUpperCase();
+        histButtonEl.textContent = searchedName;
 
   }
 
-  var saveSearch = function(name) {
-    if (searchHistory.indexOf(name) === -1) {
-        name = name.toUpperCase();
-        searchHistory.push(name);
+  var saveSearch = function(searchedName) {
+    if (searchHistory.indexOf(searchedName) === -1) {
+        searchedName = searchedName.toUpperCase();
+        searchHistory.push(searchedName);
 
         //save player to page
-        historyButton(name);
+        historyButton(searchedName);
     }
-    localStorage.setItem("name", searchHistory);
+    localStorage.setItem("searchedName", searchHistory);
   }
 
   var savedStorage = function() {
-    searchHistory = localStorage.getItem("name");
+    searchHistory = localStorage.getItem("searchedName");
 
     if (searchHistory === null) {
         searchHistory = [];
@@ -346,6 +346,7 @@ console.log("player game stats:", playerGameStats)
     for (var i = 0; i < searchHistory.length; i++) {
         historyButton(searchHistory[i]);
     }
+    
 
     $(".clr-btn").on("click", function () {
         localStorage.clear();
