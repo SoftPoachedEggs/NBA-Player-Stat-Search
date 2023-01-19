@@ -347,7 +347,7 @@ console.log("player game stats:", playerGameStats)
         historyButton(searchHistory[i]);
     }
 
-    $(".clr-btn").on("click", function (event) {
+    $(".clr-btn").on("click", function () {
         localStorage.clear();
         $(".history-btn").remove();
         searchHistory = [];
