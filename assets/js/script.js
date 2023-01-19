@@ -11,6 +11,7 @@ let playerBioEl = document.querySelector('#playerBioCard')
 let searchFormEl = document.querySelector('#searchInput')
 //this will target the submit button. i would add the same id to whatever the submit button to the HTML
 let submitSearchEl = document.querySelector('#searthBtn')
+let playerImageEl = document.querySelector('#playerImg'
 var searchHistory = [];
 
 
@@ -34,8 +35,11 @@ function handleSearchFormSubmit(event) {
     console.error('You need a search input value!');
     return;
   }
-
+  searchInputVal = searchInputVal.replace(/ /g, "%20");
   searchForPlayerAPI(searchInputVal);
+  console.log("search input", searchInputVal);
+;
+
 }
 
 if (submitSearchEl) {
@@ -44,7 +48,6 @@ if (submitSearchEl) {
   };
 
 console.log("search button clicked", )
-
 
 //-------------------------API Player Search Function---------------
 
@@ -80,9 +83,7 @@ let searchForPlayerAPI = (searchedName) => {
       let start = resultObj.nba.start ? resultObj.nba.start : null;
       let pro = resultObj.nba.pro ? resultObj.nba.pro : null;
       if (start !== null && pro !== null) {
-        //create and append elements to the player card
-        //...
-    
+      
       // set up `<div>` to hold result content
       var resultCard = document.createElement('div');
       //change style to match at later date. 
@@ -95,7 +96,39 @@ let searchForPlayerAPI = (searchedName) => {
     
       var titleEl = document.createElement('h3');
       titleEl.textContent = resultObj.firstname + " " + resultObj.lastname;
-    
+      //display image of player//
+      var thumbNailEl = document.createElement('img');
+      var url = "https://en.wikipedia.org/w/api.php?" +
+        new URLSearchParams({
+            origin: "*",
+            action: "query",
+            prop:"pageimages",
+            piprop:"thumbnail",
+            pithumbsize: "100",
+            titles: resultObj.firstname + " " + resultObj.lastname,
+            format: "json",
+        });
+        fetch(url)
+        .then(function(response){
+            return response.json();
+        })
+        .then(function(data) {
+          printImage(data);
+        })
+        .catch(function(error){console.log(error);});
+        
+        var thumbNailEl = document.createElement('img');
+        resultCard.append(thumbNailEl);
+
+        let printImage= (data) => {
+        var pages = data.query.pages;
+        var imgURL = Object.values(pages)[0].thumbnail.source;
+        console.log(imgURL);
+        //img element here
+        thumbNailEl.src = imgURL;
+
+      }
+
       var bodyContentEl = document.createElement('p');
         if (resultObj.nba.start) {
           bodyContentEl.innerHTML +=
@@ -126,8 +159,8 @@ let searchForPlayerAPI = (searchedName) => {
       var linkButtonEl = document.createElement('a');
       linkButtonEl.textContent = 'View Stat Card';
       linkButtonEl.addEventListener("click", function(){
-        printPlayerProfile(resultObj.id);
         displaySelectedPlayer(resultObj.id);
+        printPlayerProfile(resultObj.id);
       });
       //linkButtonEl.setAttribute('href', "./player-page.html");
       resultBody.append(titleEl, bodyContentEl, linkButtonEl);
@@ -162,6 +195,34 @@ return response.json()
 
 let printPlayerBio = (printBio) => {
   console.log("print player function", printBio)
+  
+  var url = "https://en.wikipedia.org/w/api.php?" +
+    new URLSearchParams({
+        origin: "*",
+        action: "query",
+        prop:"pageimages",
+        piprop:"thumbnail",
+        pithumbsize: "400",
+        titles: printBio.firstname + " " + printBio.lastname,
+        format: "json",
+    });
+    fetch(url)
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(data) {
+      printImage(data);
+    })
+    .catch(function(error){console.log(error);});
+    
+    let printImage= (data) => {
+      var pages = data.query.pages;
+      var imgURL = Object.values(pages)[0].thumbnail.source;
+      console.log(imgURL);
+      //img element here
+      playerImageEl.src = imgURL;
+    }
+
   playerBioEl.innerHTML +=
     '<h2><strong>' + printBio.firstname + " " +  printBio.lastname + '<br/></h2>';
   if (printBio.birth.date) {
@@ -219,8 +280,8 @@ let printPlayerBio = (printBio) => {
     playerBioEl.innerHTML +=
     '<strong>College: </strong> No record on file.' + '<br/>'
   }
-}}
-
+}
+}
 
 //--------------------Selected Player Stat Card Print API---------------------
 let displaySelectedPlayer = (selectedPlayerID) => {
@@ -237,9 +298,9 @@ let displaySelectedPlayer = (selectedPlayerID) => {
   .catch(error => {
     console.log(error)
     });
-
-let printPlayerStats = (playerGameStats) => {
-console.log("player game stats:", playerGameStats)
+  
+  let printPlayerStats = (playerGameStats) => {
+    console.log("player game stats:", playerGameStats)
     let minutesPlayed = 0;
     let points = 0;
     let fieldGoalsMade = 0;
