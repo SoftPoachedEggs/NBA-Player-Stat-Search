@@ -57,7 +57,13 @@ var url = "https://en.wikipedia.org/w/api.php?" +
         // Parse text and return string
         var accomplishment = parseText(plainWiki, 'highlights');
         var teamName = parseText(plainWiki, 'team');
+        /*
+        ************* Replace tName with element that is to be the team name***********
+        */
         tName.innerHTML = teamName;
+        /*
+        Specifically for the awards as it is translated into an array
+        */
         var accomplishments = accomplishment.split(')');
         for ( i = 0; i < (accomplishments.length-1); i++ ) {
           console.log(i)
