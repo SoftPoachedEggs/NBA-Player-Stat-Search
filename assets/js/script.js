@@ -1,59 +1,72 @@
 /* I need to pull 1 image from the Wikipedia page for the player picture and 1 image for the player team banner */
-var player = "Stephen Curry";
-var getPage = "";
-var getInfoBoxImage = "";
+var player = "LeBron James";
 var pImg = document.querySelector("img");
-
+var pName = document.getElementById("name");
+var pHeight = document.getElementById("height");
+var pWeight = document.getElementById("weight");
 
 
 /* 
-To pull infobox 
-http://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=Scary%20Monsters%20and%20Nice%20Sprites&rvsection=0
+    Gets and sets url for image source from wikipedia
+    For main thumbnail page
 */
-
-const url = "https://en.wikipedia.org/w/api.php?" +
+var url = "https://en.wikipedia.org/w/api.php?" +
+/* Sets search parameters for the api to target */
     new URLSearchParams({
         origin: "*",
         action: "query",
         prop:"pageimages",
+        piprop:"thumbnail",
+        pithumbsize: "400",
         titles: player,
         format: "json",
     });
-
-    // try {
-    //     var req = fetch(url);
-    //     var json = req.json();
-    //     console.log(json.parse.text["*"]);
-    // } catch (e) {
-    //     console.error(e);
-    // }
 
     fetch(url)
     .then(function(response){
         return response.json();
     })
-    .then(function(json) {
-        console.log(url);
-        console.log(json.query.pages);
-        var pages = json.query.pages;
-        for (var page in pages) {
-            for (var img of pages[page].images) {
-                console.log(img.title);
-            }
-        }
+    .then(function(data) {
+        var pages = data.query.pages;        
+        var imgURL = Object.values(pages)[0].thumbnail.source;
+        pImg.src = imgURL;
     })
     .catch(function(error){console.log(error);});
 
-// var pPage = fetch( url )
-//     .then(function(response){
-//         console.log(url);
-//         return response.json();
-//     })
-    // .then(function(json){
-    //     pImg.src = "https://upload.wikimedia.org/wikipedia/commons/a/aa/" + json.parse.images[1];
-    //     console.log(json.parse.images[1]);
-    // })
+/* 
+    Gets html for page and formats to basic string
+*/
+var url = "https://en.wikipedia.org/w/api.php?" +
+/* Sets search parameters for the api to target */
+    new URLSearchParams({
+        origin: "*",
+        action: "parse",
+        prop:"text",
+        page: player,
+        format: "json",
+    });
+    
+    fetch(url)
+   .then(function(response){
+        return response.json();
+    })
+    .then(function(data) {
+        var wikiHTML = data.parse.text["*"];
+        var plainWiki = wikiHTML.replace(/<(?:.|\n)*?>/gm, '');
+        var present = '-present';
+        var lastIndexPresent = plainWiki.indexOf('-present');
+        var indexCareerInfo =plainWiki.indexOf('Career highlights');
+        console.log("starting index " + lastIndexPresent);
+        console.log("ending index " + indexCareerInfo);
+        // console.log(plainWiki.slice( lastIndexPresent + present.length, indexCareerInfo ));      
+        console.log(plainWiki);      
+    })
+    .catch(function(error){console.log(error);});
 
-// var imageAddress = "https://upload.wikimedia.org/wikipedia/commons/a/aa/" + pPage.parse.images;
-/* After pulling images add the image to the page */
-// https://upload.wikimedia.org/wikipedia/commons/a/aa/TechCrunch_Disrupt_2019_%2848834853256%29_%281%29.jpg
+function setStats () {
+    // appending new text node
+    pName.appendChild(document.createTextNode('Name: ' + player));
+    pHeight.appendChild(document.createTextNode('Height: '  ));
+    pWeight.appendChild(document.createTextNode('Weight: ' ));
+}
+
