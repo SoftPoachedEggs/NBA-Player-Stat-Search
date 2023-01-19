@@ -11,6 +11,7 @@ let playerBioEl = document.querySelector('#playerBioCard')
 let searchFormEl = document.querySelector('#searchInput')
 //this will target the submit button. i would add the same id to whatever the submit button to the HTML
 let submitSearchEl = document.querySelector('#searthBtn')
+var searchHistory = [];
 
 
 //api options.... do not touch. 
@@ -311,4 +312,48 @@ console.log("player game stats:", playerGameStats)
         playerStatCardSectionEl.innerHTML +=
         '<strong>Personal Fouls: </strong> ' + personalfouls + '<br/>';
     }
+  }
+
+  var historyButton = function(name) {
+    var histButtonEl = document.createElement("button");
+        histButtonEl.setAttribute("type", "submit" );
+        histButtonEl.classList = "history-btn";
+        name = name.toUpperCase();
+        histButtonEl.textContent = name;
+
+  }
+
+  var saveSearch = function(name) {
+    if (searchHistory.indexOf(name) === -1) {
+        name = name.toUpperCase();
+        searchHistory.push(name);
+
+        //save player to page
+        historyButton(name);
+    }
+    localStorage.setItem("name", searchHistory);
+  }
+
+  var savedStorage = function() {
+    searchHistory = localStorage.getItem("name");
+
+    if (searchHistory === null) {
+        searchHistory = [];
+        return;
+    }
+
+    searchHistory = searchHistory.split(",");
+    for (var i = 0; i < searchHistory.length; i++) {
+        historyButton(searchHistory[i]);
+    }
+
+    $(".clr-btn").on("click", function (event) {
+        localStorage.clear();
+        $(".history-btn").remove();
+        searchHistory = [];
+        savedStorage();
+    });
+
+    savedStorage();
+
   }

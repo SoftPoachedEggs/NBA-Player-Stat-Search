@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css"/>
     <link rel="stylesheet" href="./assets/CSS/style.css"/>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
+    <link href="./assets/images/basketball.png" rel="icon" type="image/x-icon" />
     <title>Court Central</title>
     
 </head>
@@ -20,6 +21,7 @@
               <i class="uil uil-times navCloseBtn"></i>
               <li><a href="#">NBA</a></li>
               <li><a href="#">Live Odds</a></li>
+              <a href="#pastSearches"><button id="historyBtn">History</button></a>
             </ul>
 
             <i class="uil uil-search search-icon" id="searchIcon"></i>
@@ -39,8 +41,19 @@
             </section>
           <div id="playerBioCard" class = "item p-stat"></div>
           <div id="playerStatCardSection" class = "item p-stat"></div>
+
+          <!-- search history -->
+          <section id="pastSearches" class="search-list">
+            <strong>Your past searches:</strong>
+          </section>
+
+          <section id="clear-button">
+            <div id="clear-button" class="clear-btn">
+              <button class="clr-btn">Clear History</button>
+            </div>
+          </section>
           
-          
+
     </body>
     <script src="./assets/js/script.js" defer></script>
 </html>

@@ -101,6 +101,39 @@ a {
   color: #fff;
 }
 
+#historyBtn {
+  cursor: pointer;
+}
+
+#historyBtn:hover {
+  color: black;
+  background-color: white;
+  cursor: pointer;
+  border: outset;
+}
+
+.clr-btn {
+  border: outset;
+
+}
+
+.clr-btn:hover {
+  cursor: pointer;
+  border: outset;
+}
+
+#pastSearches {
+  margin: 0px;
+}
+
+.history-btn {
+  border: outset;
+}
+
+.history-btn:hover {
+  cursor: pointer;
+  border: outset;
+}
 
 
 /* responsive */
