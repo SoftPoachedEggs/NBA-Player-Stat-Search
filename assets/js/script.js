@@ -12,6 +12,7 @@ let searchFormEl = document.querySelector('#searchInput');
 //this will target the submit button. i would add the same id to whatever the submit button to the HTML
 let submitSearchEl = document.querySelector('#searthBtn');
 let playerImageEl = document.querySelector('#playerImg');
+let playerAwards = document.querySelector('#awards');
 
 //api options.... do not touch. 
 const options = {
@@ -40,6 +41,7 @@ function handleSearchFormSubmit(event) {
 if (submitSearchEl) {
   // Not called
   submitSearchEl.addEventListener('click', handleSearchFormSubmit);
+
   };
 
 console.log("search button clicked", )
@@ -83,7 +85,7 @@ let searchForPlayerAPI = (searchedName) => {
       var resultCard = document.createElement('div');
       //change style to match at later date. 
       resultCard.classList.add('card', 'bg-light', 'text-dark', 'mb-3', 'p-3');
-      resultCard.setAttribute('id', resultObj.id)
+      resultCard.setAttribute('id', resultObj.id);
     
       var resultBody = document.createElement('div');
       resultBody.classList.add('card-body');
@@ -173,7 +175,7 @@ let searchForPlayerAPI = (searchedName) => {
 //--------------------Display Player Bio Card API ----------------------
 //use below fetch address and pass in the playerNumber variable once the player number has been selected. 
 let printPlayerProfile = (selectedPlayerID) => {
-let playerID = selectedPlayerID
+let playerID = selectedPlayerID;
 console.log(playerID);
 fetch('https://api-nba-v1.p.rapidapi.com/players?id=' + playerID , options)
 //fetch('https://api-nba-v1.p.rapidapi.com/players?id=220', options)
@@ -218,6 +220,9 @@ let printPlayerBio = (printBio) => {
       //img element here
       playerImageEl.src = imgURL;
     }
+  // Clear inner html
+  playerBioEl.innerHTML = "";
+
   //****Print BIO elements to page****
   playerBioEl.innerHTML +=
     '<h2><strong>' + printBio.firstname + " " +  printBio.lastname + '<br/></h2>';
@@ -279,6 +284,7 @@ let printPlayerBio = (printBio) => {
 }
 }
 
+
 //--------------------Display Selected Player API---------------------
 let displaySelectedPlayer = (selectedPlayerID) => {
   let playerID = selectedPlayerID
@@ -296,6 +302,7 @@ let displaySelectedPlayer = (selectedPlayerID) => {
     });
   
   let printPlayerStats = (playerGameStats) => {
+    playerStatCardSectionEl.innerHTML = "";
     console.log("player game stats:", playerGameStats)
     let minutesPlayed = 0;
     let points = 0;
