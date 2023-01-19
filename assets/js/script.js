@@ -4,16 +4,14 @@
 //update query selector to target where you want search results to print. search results will display. we can make the
 //results a clickable div or use a view more link. 
 let resultContentEl = document.querySelector('#search-result-content');
-let playerStatCardSectionEl = document.querySelector('#playerStatCardSection')
+let playerStatCardSectionEl = document.querySelector('#playerStatCardSection');
 //this is display card for player bio (age / birthplace/ height etc...)
-let playerBioEl = document.querySelector('#playerBioCard')
+let playerBioEl = document.querySelector('#playerBioCard');
 //search box input query selector
-let searchFormEl = document.querySelector('#searchInput')
+let searchFormEl = document.querySelector('#searchInput');
 //this will target the submit button. i would add the same id to whatever the submit button to the HTML
-let submitSearchEl = document.querySelector('#searthBtn')
-let playerImageEl = document.querySelector('#playerImg'
-var searchHistory = [];
-
+let submitSearchEl = document.querySelector('#searthBtn');
+let playerImageEl = document.querySelector('#playerImg');
 
 //api options.... do not touch. 
 const options = {
@@ -35,11 +33,8 @@ function handleSearchFormSubmit(event) {
     console.error('You need a search input value!');
     return;
   }
-  searchInputVal = searchInputVal.replace(/ /g, "%20");
   searchForPlayerAPI(searchInputVal);
   console.log("search input", searchInputVal);
-;
-
 }
 
 if (submitSearchEl) {
@@ -155,12 +150,14 @@ let searchForPlayerAPI = (searchedName) => {
           '<strong>id:</strong> No record on file.' + '<br/>'
         }
         //make logic to filter out records with more than two missing. 
-
+      
+      let playerName = resultObj.firstname + " " + resultObj.lastname
       var linkButtonEl = document.createElement('a');
       linkButtonEl.textContent = 'View Stat Card';
       linkButtonEl.addEventListener("click", function(){
         displaySelectedPlayer(resultObj.id);
         printPlayerProfile(resultObj.id);
+        savePlayerIDs(resultObj.id, playerName);
       });
       //linkButtonEl.setAttribute('href', "./player-page.html");
       resultBody.append(titleEl, bodyContentEl, linkButtonEl);
@@ -173,7 +170,7 @@ let searchForPlayerAPI = (searchedName) => {
 
 
 
-//--------------------Selected Player Bio Card Print API ----------------------
+//--------------------Display Player Bio Card API ----------------------
 //use below fetch address and pass in the playerNumber variable once the player number has been selected. 
 let printPlayerProfile = (selectedPlayerID) => {
 let playerID = selectedPlayerID
@@ -192,10 +189,9 @@ return response.json()
   console.log(error)
   });
 
-
 let printPlayerBio = (printBio) => {
   console.log("print player function", printBio)
-  
+//****Image API from WIKI***
   var url = "https://en.wikipedia.org/w/api.php?" +
     new URLSearchParams({
         origin: "*",
@@ -222,7 +218,7 @@ let printPlayerBio = (printBio) => {
       //img element here
       playerImageEl.src = imgURL;
     }
-
+  //****Print BIO elements to page****
   playerBioEl.innerHTML +=
     '<h2><strong>' + printBio.firstname + " " +  printBio.lastname + '<br/></h2>';
   if (printBio.birth.date) {
@@ -283,7 +279,7 @@ let printPlayerBio = (printBio) => {
 }
 }
 
-//--------------------Selected Player Stat Card Print API---------------------
+//--------------------Display Selected Player API---------------------
 let displaySelectedPlayer = (selectedPlayerID) => {
   let playerID = selectedPlayerID
   fetch('https://api-nba-v1.p.rapidapi.com/players/statistics?id=' + playerID + '&season=2022', options)
@@ -374,47 +370,78 @@ let displaySelectedPlayer = (selectedPlayerID) => {
         '<strong>Personal Fouls: </strong> ' + personalfouls + '<br/>';
     }
   }
+//----------------------------Save Searched---------------------------
+  //create array to store user search values
+  var recentSearchesArray = [];
+  //set the location you want these to display here.... 
+  const recentSearchDisplay = document.querySelector("#search-result-content");
 
-  var historyButton = function(name) {
-    var histButtonEl = document.createElement("button");
-        histButtonEl.setAttribute("type", "submit" );
-        histButtonEl.classList = "history-btn";
-        name = name.toUpperCase();
-        histButtonEl.textContent = name;
-
+  //invoke so that recent searches are populated after page loads
+  populateRecentSearches();
+  
+  //populate the recent search display with the user's recent player searches
+  function populateRecentSearches() {
+    //this sets location for buttons to append to.
+    recentSearchDisplay.innerHTML = "Recent Searches:";
+  
+    //get the recent searches out of local storage
+    var recentSearchArray = getRecentSearches();
+  
+    // this loop works in reverse to display newest first
+    for (let i = recentSearchArray.length - 1; i >= 0; i--) {
+      //to change button properties - target button id "result-button"
+      const recentSearched = "result-button"
+      console.log("recent search array: ", recentSearchArray)
+      const newSearchedButton = document.createElement("button");
+      newSearchedButton.setAttribute("id", recentSearched);
+      recentSearchDisplay.appendChild(newSearchedButton);
+      newSearchedButton.textContent = recentSearchArray[i].name;
+      //add functionality to button and send saved array info to display API
+      newSearchedButton.addEventListener("click", function(){
+        displaySelectedPlayer(recentSearchArray[i].id);
+        printPlayerProfile(recentSearchArray[i].id);
+      })
+    }
   }
 
-  var saveSearch = function(name) {
-    if (searchHistory.indexOf(name) === -1) {
-        name = name.toUpperCase();
-        searchHistory.push(name);
 
-        //save player to page
-        historyButton(name);
+  //if there is already an array in local storage then parse it and assign to variable "recentSearchesArray"
+  function getRecentSearches() {
+    storedSearches = localStorage.getItem("recentSearches");
+    if (storedSearches) {
+      recentSearchesArray = JSON.parse(storedSearches);
     }
-    localStorage.setItem("name", searchHistory);
+    return recentSearchesArray;
   }
+  
+  //If the player name does not already exist and less than 5 display
+  //call the function and plass playerID and playerName to save as key value. 
+  function savePlayerIDs(playerID, playerName) {
+  //create an object and save both properties at once
+    let player = playerName
+    let idNum = playerID
 
-  var savedStorage = function() {
-    searchHistory = localStorage.getItem("name");
-
-    if (searchHistory === null) {
-        searchHistory = [];
-        return;
+    let savedEntry = {
+      name: player,
+      id: idNum
     }
 
-    searchHistory = searchHistory.split(",");
-    for (var i = 0; i < searchHistory.length; i++) {
-        historyButton(searchHistory[i]);
+    console.log("save function receiving:", recentSearchesArray)
+
+    //this checks to see if the object in the array already exists. 
+    //If not, it will push entry or shift if there is already 5 in array memory
+    if (
+      recentSearchesArray.includes(savedEntry) === false &&
+      recentSearchesArray.length < 5
+    ) {
+      recentSearchesArray.push(savedEntry);
+      localStorage.setItem("recentSearches", JSON.stringify(recentSearchesArray));
+    } else if (
+      recentSearchesArray.includes(savedEntry) === false &&
+      (recentSearchesArray.length = 5)
+    ) {
+      recentSearchesArray.shift();
+      recentSearchesArray.push(savedEntry);
+      localStorage.setItem("recentSearches", JSON.stringify(recentSearchesArray));
     }
-
-    $(".clr-btn").on("click", function (event) {
-        localStorage.clear();
-        $(".history-btn").remove();
-        searchHistory = [];
-        savedStorage();
-    });
-
-    savedStorage();
-
   }
