@@ -1,3 +1,6 @@
+// Global Scope variable
+var player;
+
 //------------------nav bar do not delete--------------------------
 const nav = document.querySelector(".nav"),
   searchIcon = document.querySelector("#searchIcon"),
@@ -27,7 +30,7 @@ let searchFormEl = document.querySelector('#searchInput');
 //this will target the submit button. i would add the same id to whatever the submit button to the HTML
 let submitSearchEl = document.querySelector('#searthBtn');
 let playerImageEl = document.querySelector('#playerImg');
-let playerAwards = document.querySelector('#awards');
+let playerAwards = document.querySelector('#playerAwards');
 
 //api options.... do not touch. 
 const options = {
@@ -108,6 +111,7 @@ let searchForPlayerAPI = (searchedName) => {
     
       var titleEl = document.createElement('h3');
       titleEl.textContent = resultObj.firstname + " " + resultObj.lastname;
+
       //display image of player//
       var thumbNailEl = document.createElement('img');
       var url = "https://en.wikipedia.org/w/api.php?" +
@@ -134,8 +138,15 @@ let searchForPlayerAPI = (searchedName) => {
 
         let printImage= (data) => {
         var pages = data.query.pages;
-        var imgURL = Object.values(pages)[0].thumbnail.source;
-        console.log(imgURL);
+        var imgURL;
+        // Checks if null
+        if ( Object.values(pages)[0].thumbnail.source == null ) {
+          imgURL = "";
+        } else {
+          // If source valid sets imgURL to the source
+          imgURL = Object.values(pages)[0].thumbnail.source;
+        }
+        
         //img element here
         thumbNailEl.src = imgURL;
 
@@ -208,7 +219,12 @@ return response.json()
 
 let printPlayerBio = (printBio) => {
   console.log("print player function", printBio)
-//****Image API from WIKI***
+
+// variable
+player = printBio.firstname + " " + printBio.lastname;
+/*
+  Image API From WIKI
+*/
   var url = "https://en.wikipedia.org/w/api.php?" +
     new URLSearchParams({
         origin: "*",
@@ -229,10 +245,19 @@ let printPlayerBio = (printBio) => {
     .catch(function(error){console.log(error);});
     
     let printImage= (data) => {
+      // Resets image
+      var imgURL = "";
+      playerImageEl.src = imgURL;
+      // Default operations
       var pages = data.query.pages;
-      var imgURL = Object.values(pages)[0].thumbnail.source;
-      console.log(imgURL);
-      //img element here
+      // Checks if the thumbnail has an available source
+      if ( Object.values(pages)[0].thumbnail.source == null ) {
+        imgURL = "";
+      } else {
+        // If source valid sets imgURL to the source
+        imgURL = Object.values(pages)[0].thumbnail.source;
+      }
+      //Sets the img element to the pulled source URL
       playerImageEl.src = imgURL;
     }
   // Clear inner html
@@ -296,6 +321,97 @@ let printPlayerBio = (printBio) => {
     playerBioEl.innerHTML +=
     '<strong>College: </strong> No record on file.' + '<br/>'
   }
+
+  /* 
+    Gets html for page and formats to basic string
+*/
+var url = "https://en.wikipedia.org/w/api.php?" +
+/* Sets search parameters for the api to target */
+    new URLSearchParams({
+        origin: "*",
+        action: "parse",
+        prop:"text",
+        page: player,
+        format: "json",
+    });
+    console.log("Player is " + player);
+    
+    fetch(url)
+   .then(function(response){
+        return response.json();
+    })
+    .then(function(data) {
+       // Resets inner html
+       playerAwards.innerHTML = "";
+       // grabs html from page
+        var wikiHTML = data.parse.text["*"];
+        // strips down html
+        var plainWiki = wikiHTML.replace(/<(?:.|\n)*?>/gm, '');
+        // Parse text and return string
+        var accomplishment = parseText(plainWiki, 'highlights');
+        /*
+        Specifically for the awards as it is translated into an array
+        */
+        var accomplishments = accomplishment.split(')');
+        var loopNum;
+        if  (8> accomplishments.length) {
+          loopNum = accomplishments.length;
+        } else if (accomplishments.length < 1) {
+          loopNum = 0;
+        } else {
+          loopNum = 8;
+        }
+        if (loopNum > 2){
+          console.log(loopNum);
+          // Prints Awards header
+          playerAwards.innerHTML +=
+          '<h2><strong>' + 'Awards' + '<br/></h2>' + '<br/>';
+        }
+        // Print loop num
+        console.log("loop number " + loopNum);
+        // loop to create p
+        for ( i = 0; i < (loopNum-1); i++ ) {
+          console.log(i)
+          // can choose to do a different type of element
+          var tag = document.createElement("p");
+          var brake = document.createElement("br");
+          // replace .highlights with container that is to hold highlights
+          tag.className = 'highlight';
+          tag.textContent = accomplishments[i];
+          playerAwards.appendChild(tag);
+          playerAwards.appendChild(brake);
+        }
+        
+    })
+    .catch(function(error){console.log(error);});
+
+  // Function to parse text for both awards and Team
+  function parseText (text, term) {
+    // creates variables
+    var index1;
+    var index2;
+    var indexOne;
+    var indexTwo;
+    // Sorts through which term is used
+    if ( term == 'highlights' ) {
+      index1 = 'Career highlights and awards\n';
+      index2 = '\n\n';
+      indexOne = text.indexOf(index1);
+      indexTwo = text.indexOf(index2, indexOne);
+    } else if (term == 'team') {
+      index1 = '&#32;';
+      index2 = 'Position';
+      indexOne = text.lastIndexOf(index1);
+      indexTwo = text.indexOf(index2, indexOne);
+    } else {
+      console.log("Please insert proper parameters\n-------------------------------\nsearch---------------term\n-------------------------------\nplayer---------------highlights\nplayer---------------team\nteam-----------------colors");
+    }
+    var returnString = text.slice(indexOne + index1.length, indexTwo);
+    console.log(returnString);
+    return returnString;
+  }
+
+
 }
 }
 
